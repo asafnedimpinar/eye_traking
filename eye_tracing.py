@@ -3,7 +3,6 @@ import face_recognition
 import os
 import numpy as np
 
-# Yüz veri tabanını yükleme
 def load_known_faces():
     known_encodings = []
     known_names = []
