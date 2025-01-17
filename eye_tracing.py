@@ -22,11 +22,9 @@ def load_known_faces():
 
     return known_encodings, known_names
 
-# Yüz tanıma ve göz takip işlemi
 def detect_and_track_eyes():
     known_encodings, known_names = load_known_faces()
 
-    # Haar Cascade göz algılayıcıyı yükleme
     eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
 
     cap = cv2.VideoCapture(0)
@@ -51,14 +49,11 @@ def detect_and_track_eyes():
                 match_index = matches.index(True)
                 name = known_names[match_index]
 
-            # Yüzün ekran üzerindeki konumu
             top, right, bottom, left = face_location
 
-            # Ekranda yüzü çizimle göster
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
             cv2.putText(frame, name, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2)
 
-            # Yüz içindeki gözleri algılama
             roi_gray = gray_frame[top:bottom, left:right]
             roi_color = frame[top:bottom, left:right]
 
@@ -70,18 +65,17 @@ def detect_and_track_eyes():
                 eye_right = eye_left + ew
                 eye_bottom = eye_top + eh
 
-                # Göz ekran dışına çıktıysa uyarı
                 if (eye_left < 0 or eye_top < 0 or eye_right > frame.shape[1] or eye_bottom > frame.shape[0]):
                     print(f"UYARI: {name} kullanıcısının gözleri ekran dışına çıkıyor!")
 
-                # Gözleri kare içine al
+        
                 cv2.rectangle(frame, (eye_left, eye_top), (eye_right, eye_bottom), (255, 0, 0), 2)
                 cv2.putText(frame, "Goz", (eye_left, eye_top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
-        # Görüntüyü göster
+
         cv2.imshow("Yüz ve Göz Tanıma", frame)
 
-        # 'q' ile çıkış
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
@@ -89,6 +83,6 @@ def detect_and_track_eyes():
     cv2.destroyAllWindows()
     print("Program sonlandırıldı.")
 
-# Program çalıştırma
+
 if __name__ == "__main__":
     detect_and_track_eyes()
