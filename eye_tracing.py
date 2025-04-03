@@ -71,9 +71,7 @@ def detect_and_track_eyes():
                 cv2.rectangle(frame, (eye_left, eye_top), (eye_right, eye_bottom), (255, 0, 0), 2)
                 cv2.putText(frame, "Goz", (eye_left, eye_top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
-
         cv2.imshow("Yüz ve Göz Tanıma", frame)
-
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
